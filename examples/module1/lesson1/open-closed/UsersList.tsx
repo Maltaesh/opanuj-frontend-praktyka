@@ -1,6 +1,7 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { useUsers } from './hooks/useUsers';
 import { User } from './User';
+import { UserPreview, DetailedUser, UserFriends } from './Variants';
 
 interface UsersListProps {
   header: string;
@@ -19,7 +20,7 @@ export const UsersList = ({ header, viewFn }: UsersListProps) => {
           <FilterButton label={'Show all'} action={removeAllFilters} />
           <FilterButton
             label={'Friends > 0'}
-            action={filterByFriends.bind(this, true)}
+            action={() => filterByFriends(true)}
           />
           <FilterButton
             label={'Friends = 0'}
@@ -29,12 +30,16 @@ export const UsersList = ({ header, viewFn }: UsersListProps) => {
       </div>
       <div className="space-y-2">
         {users.map((user: User) => (
-          <div key={user.id}>{viewFn(user)}</div>
+          <React.Fragment key={user.id}>{viewFn(user)}</React.Fragment>
         ))}
       </div>
     </div>
   );
 };
+
+UsersList.UserPreview = UserPreview;
+UsersList.UserFriends = UserFriends;
+UsersList.DetailedUser = DetailedUser;
 
 interface FilterButtonProps {
   label: string;
