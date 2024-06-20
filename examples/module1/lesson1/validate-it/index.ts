@@ -19,7 +19,7 @@ export function inputValidator() {
       : updateValidationResultContent('Invalid');
   });
 
-  clearBtn.addEventListener('click', () => {
+  clearBtn.addEventListener(EVENTS_TYPES.click, () => {
     updateValidationInputContent(EMPTY_STRING);
     updateValidationResultContent(EMPTY_STRING);
   });
