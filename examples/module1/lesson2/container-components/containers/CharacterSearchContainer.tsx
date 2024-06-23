@@ -1,33 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import CharacterList from '../components/CharacterList';
-import SearchForm from '../components/SearchForm';
+import SearchForm, { type SortOptions } from '../components/SearchForm';
 import SearchTitle from '../components/SearchTitle';
-import { Character } from '../types/Character';
+
+import { useFetchCharacters } from './hooks/useFetchCharacters';
+import { useSortCharacters } from './hooks/useSortCharacters';
+import { Option } from '@swan-io/boxed';
 
 function CharacterSearchContainer() {
   const [name, setName] = useState('');
   const [gender, setGender] = useState('');
-  const [characters, setCharacters] = useState<Character[]>([]);
-  const [sortOption, setSortOption] = useState('');
 
-  useEffect(() => {
-    if (name || gender) {
-      fetch(
-        `https://rickandmortyapi.com/api/character/?name=${name}&gender=${gender}`
-      )
-        .then((response) => response.json())
-        .then((data) => setCharacters(data.results || []))
-        .catch((error) => console.error('Error fetching data:', error));
-    }
-  }, [name, gender]);
-
-  const sortedCharacters = [...characters].sort((a, b) => {
-    if (sortOption === 'name') {
-      return a.name.localeCompare(b.name);
-    } else if (sortOption === 'created') {
-      return new Date(a.created).getTime() - new Date(b.created).getTime();
-    }
-    return 0;
+  const [sortOption, setSortOption] = useState<SortOptions>('initial');
+  const { state, result } = useFetchCharacters({ name, gender });
+  const sortedCharacters = useSortCharacters({
+    characters: Option.fromNullable(result),
+    sortOption,
   });
 
   return (
@@ -44,7 +32,9 @@ function CharacterSearchContainer() {
         setSortOption={setSortOption}
       />
       <div className="pt-12" />
-      <CharacterList characters={sortedCharacters} />
+      {state === 'loading' && <p>Loading...</p>}
+      {state === 'success' && <CharacterList characters={sortedCharacters} />}
+      {state === 'error' && <p>Nic nie znaleziono, spróbuj ponownie!</p>}
       <div className="pt-16" />
     </>
   );

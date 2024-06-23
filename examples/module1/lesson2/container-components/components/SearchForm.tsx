@@ -1,10 +1,14 @@
+import React from 'react';
+
+export type SortOptions = 'initial' | 'name' | 'created';
+
 type SearchFormProps = {
   name: string;
   setName: (name: string) => void;
   gender: string;
   setGender: (gender: string) => void;
-  sortOption: string;
-  setSortOption: (sortOption: string) => void;
+  sortOption: SortOptions;
+  setSortOption: (sortOption: SortOptions) => void;
 };
 
 function SearchForm({
@@ -15,6 +19,10 @@ function SearchForm({
   sortOption,
   setSortOption,
 }: SearchFormProps) {
+  const handleSortOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOption(e.target.value as SortOptions);
+  };
+
   return (
     <form className="space-x-4 flex items-end justify-center">
       <label className="flex flex-col">
@@ -45,10 +53,12 @@ function SearchForm({
         Sort by
         <select
           value={sortOption}
-          onChange={(e) => setSortOption(e.target.value)}
+          onChange={handleSortOptionChange}
           className="border h-7 mt-1"
         >
-          <option value="">Initial</option>
+          <option value="initial" disabled hidden>
+            Initial
+          </option>
           <option value="name">Name</option>
           <option value="created">Created Date</option>
         </select>
