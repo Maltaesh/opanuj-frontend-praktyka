@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import CharacterList from '../components/CharacterList';
-import SearchForm, { type SortOptions } from '../components/SearchForm';
-import SearchTitle from '../components/SearchTitle';
+import CharacterList from '../../components/CharacterList';
+import SearchForm, { type SortOptions } from '../../components/SearchForm';
+import SearchTitle from '../../components/SearchTitle';
 
 import { useFetchCharacters } from './hooks/useFetchCharacters';
 import { useSortCharacters } from './hooks/useSortCharacters';

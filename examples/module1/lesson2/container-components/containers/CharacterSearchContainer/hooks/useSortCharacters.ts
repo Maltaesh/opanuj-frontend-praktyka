@@ -1,5 +1,5 @@
-import type { SortOptions } from '../../components/SearchForm';
-import type { Character } from '../../types/Character';
+import type { SortOptions } from '../../../components/SearchForm';
+import type { Character } from '../../../types/Character';
 import { Option } from '@swan-io/boxed';
 
 type UseSortCharactersProps = {

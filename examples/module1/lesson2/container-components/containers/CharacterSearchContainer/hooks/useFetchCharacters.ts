@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Character } from '../../types/Character';
+import type { Character } from '../../../types/Character';
 import { Option } from '@swan-io/boxed';
 
 type FetchState = 'idle' | 'loading' | 'error' | 'success';

@@ -1,4 +1,6 @@
 import React from 'react';
+import { SelectGender } from './SelectGender';
+import { SelectSortBy } from './SelectSortBy';
 
 export type SortOptions = 'initial' | 'name' | 'created';
 
@@ -19,10 +21,6 @@ function SearchForm({
   sortOption,
   setSortOption,
 }: SearchFormProps) {
-  const handleSortOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSortOption(e.target.value as SortOptions);
-  };
-
   return (
     <form className="space-x-4 flex items-end justify-center">
       <label className="flex flex-col">
@@ -35,34 +33,8 @@ function SearchForm({
           onChange={(e) => setName(e.target.value)}
         />
       </label>
-      <label className="flex flex-col">
-        Gender
-        <select
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-          className="border h-7 mt-1"
-        >
-          <option value="">Any Gender</option>
-          <option value="female">Female</option>
-          <option value="male">Male</option>
-          <option value="genderless">Genderless</option>
-          <option value="unknown">Unknown</option>
-        </select>
-      </label>
-      <label className="flex flex-col">
-        Sort by
-        <select
-          value={sortOption}
-          onChange={handleSortOptionChange}
-          className="border h-7 mt-1"
-        >
-          <option value="initial" disabled hidden>
-            Initial
-          </option>
-          <option value="name">Name</option>
-          <option value="created">Created Date</option>
-        </select>
-      </label>
+      <SelectGender gender={gender} setGender={setGender} />
+      <SelectSortBy setSortOption={setSortOption} sortOption={sortOption} />
     </form>
   );
 }
